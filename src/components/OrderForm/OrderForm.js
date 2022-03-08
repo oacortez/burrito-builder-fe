@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 
 class OrderForm extends Component {
   constructor(props) {
-    super();
-    this.props = props;
+    super(props);
     this.state = {
       name: '',
       ingredients: []
@@ -11,9 +10,31 @@ class OrderForm extends Component {
   }
 
 
+  handleNameChange = (e) => {
+    e.preventDefault()
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  handleIngredientChange = (e) => {
+    e.preventDefault()
+    if(!this.state.ingredients.includes(e.target.name)) {
+      this.setState({ingredients: [...this.state.ingredients, e.target.name]})
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
-    this.clearInputs();
+
+    if(this.state.name.length && this.state.ingredients.length) {
+      const newOrder = {
+        name: this.state.name,
+        ingredients: this.state.ingredients
+      }
+      this.props.submitOrders(newOrder);
+      this.clearInputs();
+    } else {
+      return 'Please fill out your name and add atleast one ingredient'
+    }
   }
 
   clearInputs = () => {
