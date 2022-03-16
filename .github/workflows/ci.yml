@@ -1,0 +1,12 @@
+name: cypress-test
+on: [push]
+jobs: 
+  run-cypress: 
+    runs-on: ubuntu-20.04 
+    steps: 
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: cypress run
+        uses: cypress-io/github-actions@v2
+        with:
+          project: ./cypress
